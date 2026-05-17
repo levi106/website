@@ -1,4 +1,11 @@
 <!-- heading -->
 {{- $heading := .Get 0 -}}
-{{- $heading := printf "%s_heading" $heading -}}
-{{- T $heading | safeHTML -}}
+{{- $headingKey := printf "%s_heading" $heading -}}
+{{- $text := T $headingKey -}}
+
+{{- $anchor := index site.Data.anchors $heading -}}
+{{- if $anchor -}}
+    {{ printf "%s {#%s}" $text $anchor | safeHTML }}
+{{- else -}}
+    {{ $text | safeHTML }}
+{{- end -}}
